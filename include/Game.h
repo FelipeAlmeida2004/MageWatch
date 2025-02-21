@@ -28,11 +28,11 @@ Rodada gerarRodada(int numeroRodada) {
     rodada.numeroRodada = numeroRodada;
     rodada.totalInimigos = 10 + (numeroRodada - 1) * 2;
     if (numeroRodada % 2 == 0)
-        rodada.vidaInimigos = 50.0f + (numeroRodada - 1) * 2.0f;
+        rodada.vidaInimigos = 50.0f + (numeroRodada - 1) * 7.0f;
     else
-        rodada.vidaInimigos = 50.0f + (numeroRodada - 2) * 2.0f;
+        rodada.vidaInimigos = 50.0f + (numeroRodada - 1) * 7.0f;
 
-    rodada.velocidadeInimigos = 3.0f + (numeroRodada - 1) * 0.05f;
+    rodada.velocidadeInimigos = 3.0f + (numeroRodada - 1) * 0.07f;
     rodada.spawnDelay = 1.0f - (numeroRodada - 1) * 0.01f;
     return rodada;
 }
@@ -229,7 +229,7 @@ class Game {
 		int PrecoMelhoria = 25;
 
 		int danoProjetil = 25;
-        int dinheiroGanho = 5;
+        int dinheiroGanho = 2;
 
         Torre* TorreEmCompra = nullptr;
         Torre* torreAtual = nullptr;
@@ -444,7 +444,7 @@ class Game {
 
         void reiniciarJogo() {
             ContadorVida = 100;
-            ContadorDinheiro = 200;
+            ContadorDinheiro = 50;
             rodadaAtual = 1;
             jogoFinalizado = false;
             pausado = false;
@@ -539,7 +539,7 @@ class Game {
             RestartPause.setPosition(1920 / 2 - RestartPause.getGlobalBounds().width / 2, 600);
 
             Text RestartFinal("Restart", font, 50);
-            RestartFinal.setPosition(1920 / 2 - RestartFinal.getGlobalBounds().width / 2, 450);
+            RestartFinal.setPosition(1920 / 2 - RestartFinal.getGlobalBounds().width / 2, 600);
 
             Text sairJogoFinal("Sair", font, 50);
             sairJogoFinal.setPosition(1920 / 2 - sairJogoFinal.getGlobalBounds().width / 2, 525);
@@ -625,9 +625,9 @@ class Game {
                                 MostraTorres = !MostraTorres;
                             }
 
-                            if (areaOpcaoCompra1.contains(mouseX, mouseY) && ContadorDinheiro >= 50) {
+                            if (areaOpcaoCompra1.contains(mouseX, mouseY) && ContadorDinheiro >= PrecoTorre) {
                                 ContadorDinheiro -= PrecoTorre;
-                                TorreEmCompra = new Torre(danoProjetil, dinheiroGanho, arquivo_projetil);
+                                TorreEmCompra = new Torre(danoProjetil, 2, arquivo_projetil);
                                 TorreEmCompra->define_textura(arquivo_torre);
                                 TorreEmCompra->setCooldown(1.0f);
                                 Comprando = true;
@@ -871,10 +871,10 @@ class Game {
                     if (esperandoProximaRodada && atrasoEntreRodadas.getElapsedTime().asSeconds() >= tempoAtraso) {
                         esperandoProximaRodada = false;
                         rodadaAtual++;
-                        if (rodadaAtual % 5 == 0) {
+                        if (rodadaAtual % 8 == 0) {
 							dinheiroGanho += 5;
-                            PrecoTorre += 10;
-							PrecoMelhoria += 5;
+                            PrecoTorre = PrecoTorre * 2;
+							PrecoMelhoria += 10;
                         }
                         cout << "Preparando para a rodada " << rodadaAtual << "..." << endl;
                     }
@@ -978,7 +978,7 @@ class Game {
 
                 if (rodadaAtual > 40 && fila.Vazia()) {
                     cout << "Parab�ns, voc� venceu o jogo!" << endl;
-                    window.close();
+                    //window.close();
                 }
 
                 if (ContadorVida <= 0) {

@@ -198,7 +198,7 @@ class Game {
         string arquivo_MusicaMenu = "Assets/Gerais/Music/musica.ogg";
         string arquivo_Background = "Assets/Background/Textures/background.png";
         string arquivo_mostra_rounds = "Assets/Gerais/Textures/bandejacomprafechada.png";
-		string arquivo_mostra_informacoes = "Assets/Gerais/Textures/bandejainformacoes.png";
+	string arquivo_mostra_informacoes = "Assets/Gerais/Textures/bandejainformacoes.png";
 
 
         double velocidadeInimigos = 3.0f;
